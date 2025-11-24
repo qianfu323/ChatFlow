@@ -5,11 +5,11 @@
             <van-form @submit="onSubmit">
                 <van-cell-group inset>
                     <van-field
-                        v-model="email"
-                        name="email"
-                        label="Email"
-                        placeholder="Email"
-                        :rules="[{ required: true, message: 'Please enter your email' }]"
+                        v-model="username"
+                        name="username"
+                        label="Username"
+                        placeholder="Username"
+                        :rules="[{ required: true, message: 'Please enter your username' }]"
                     />
                     <van-field
                         v-model="password"
@@ -46,25 +46,29 @@ export default {
         const router = useRouter()
         const userStore = useUserStore()
 
-        const email = ref('')
+        const username = ref('')
         const password = ref('')
 
         const onSubmit = async (values) => {
             const result = await userStore.login({
-                email: values.email,
+                username: values.username,
                 password: values.password
             })
 
             if (result.success) {
-                showSuccessToast('Login successful')
-                router.push('/')
+                if (result.data.success) {
+                    showSuccessToast('Login successful')
+                    router.push('/')
+                } else {
+                    showFailToast(result.data.message)
+                }
             } else {
                 showFailToast(result.error.error || 'Login failed')
             }
         }
 
         return {
-            email,
+            username,
             password,
             onSubmit
         }

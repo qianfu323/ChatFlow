@@ -15,7 +15,7 @@ export const useUserStore = defineStore('user', {
     actions: {
         async login(credentials) {
             try {
-                const response = await axios.post('/users/login/', credentials)
+                const response = await axios.post('/user/login', credentials)
                 this.user = response.data.user
                 this.isAuthenticated = true
                 localStorage.setItem('user', JSON.stringify(this.user))
@@ -27,7 +27,7 @@ export const useUserStore = defineStore('user', {
 
         async register(userData) {
             try {
-                const response = await axios.post('/users/register/', userData)
+                const response = await axios.post('/user/register', userData)
                 return {success: true, data: response.data}
             } catch (error) {
                 return {success: false, error: error.response?.data || 'Registration failed'}
