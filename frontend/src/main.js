@@ -7,6 +7,10 @@ import axios from 'axios'
 // Import Vant styles and components
 import 'vant/lib/index.css';
 import Vant from 'vant';
+import { Locale } from 'vant';
+import enUS from 'vant/es/locale/lang/en-US';
+
+Locale.use('en-US', enUS);
 
 // Set base URL for axios
 axios.defaults.baseURL = 'http://127.0.0.1:8000/api';
