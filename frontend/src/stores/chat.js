@@ -2,9 +2,7 @@ import {defineStore} from 'pinia'
 import axios from 'axios'
 
 export const useChatStore = defineStore('chat', {
-    state: () => ({
-        ws: null
-    }),
+    state: () => ({}),
 
     actions: {
         // Fetch groups from the server api

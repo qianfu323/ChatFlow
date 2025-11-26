@@ -2,7 +2,7 @@
     <div class="group-list-container">
         <van-nav-bar title="Chats" fixed placeholder>
             <template #right>
-                <van-icon name="add" size="18" @click="showAddRoom = !showAddRoom"/>
+                <van-icon name="add" size="24" @click="showAddRoom = !showAddRoom"/>
             </template>
         </van-nav-bar>
 
@@ -25,8 +25,7 @@
                         :key="group.id"
                         :title="group.name"
                         :label="`Last message: ${formatLastMessageTime(group.last_message_at)}`"
-                        @click="goToGroupChat(group.id)"
-                        @login="deleteGroup(group.id)"
+                        @click="goToGroupChat(group.id, group.name)"
                     >
                         <template #icon>
                             <van-icon
@@ -90,8 +89,16 @@ const addGroupName = ref('')
 const editGroup = ref({})
 const showEditRoom = ref(false)
 
-const goToGroupChat = (groupId) => {
-    router.push(`/groups/${groupId}`)
+// navigate to group chat
+const goToGroupChat = (groupId,groupName) => {
+    console.log('go to group chat', groupId)
+    router.push({
+        name: 'Chat',
+        query: {
+            id: groupId,
+            name: groupName
+        }
+    })
 }
 
 // format timestamp to date
