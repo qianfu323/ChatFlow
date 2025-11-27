@@ -117,7 +117,7 @@ const scrollToBottom = () => {
 
 // load messages from server
 const loadMessages = async () => {
-    const result = await chatStore.fetchMessages('group', route.query.id)
+    const result = await chatStore.fetchMessages(route.query.id)
     if (result.success) {
         messages.value = result.data
         scrollToBottom()
@@ -188,7 +188,7 @@ const sendMessage = () => {
 // load messages and connect websocket
 onMounted(async () => {
     currentUser.value = userStore.getUser
-    // await loadMessages()
+    await loadMessages()
     connectWebSocket()
 })
 

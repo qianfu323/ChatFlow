@@ -44,5 +44,15 @@ export const useChatStore = defineStore('chat', {
                 return {success: false, error: error.response?.message || 'Failed to delete group'}
             }
         },
+
+        // load message
+        async fetchMessages(roomId) {
+            try {
+                const response = await axios.get(`/message?room_id=${roomId}`)
+                return response.data
+            } catch (error) {
+                return {success: false, error: error.response?.message || 'Failed to load message'}
+            }
+        }
     }
 })

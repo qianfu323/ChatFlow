@@ -3,7 +3,7 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
 from django.http import JsonResponse
 
-from .models import Room
+from .models import Room, Message
 
 
 def user_login(request):
@@ -182,3 +182,30 @@ def room(request):
             return JsonResponse({'success': False, 'message': str(e)})
 
     return JsonResponse({'success': False, 'message': 'Invalid request method'})
+
+
+def message(request):
+    """
+    message handler
+    :param request:
+    :return:
+    """
+    if request.method == 'GET':
+        # get messages with room id
+        room_id = request.GET.get('room_id')
+        if room_id:
+            messages = Message.objects.filter(room_id=room_id)
+            messages_data = [{
+                'id': message.id,
+                'room_id': message.room.id,
+                'sender_id': message.sender.id,
+                'username': message.sender.username,
+                'message': message.content,
+                'timestamp': message.timestamp
+            } for message in messages]
+            return JsonResponse({
+                'success': True,
+                'data': messages_data
+            })
+        else:
+            return JsonResponse({'success': False, 'message': 'Room ID required'})

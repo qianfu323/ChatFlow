@@ -1,5 +1,9 @@
 import json
 from channels.generic.websocket import AsyncWebsocketConsumer
+from channels.db import database_sync_to_async
+from django.utils import timezone
+from .models import Room, Message
+from django.contrib.auth.models import User
 
 
 class ChatConsumer(AsyncWebsocketConsumer):
@@ -37,9 +41,25 @@ class ChatConsumer(AsyncWebsocketConsumer):
         receive handler
         """
         if text_data:
+            # {"type":"group","room_id":"1","sender_id":1,"username":"yaphp","message":"213","timestamp":1764250832081}
             print("Received:" + text_data)
 
             data_json = json.loads(text_data)
+
+            # get data param
+            room_id = data_json.get('room_id', '')
+            sender_id = data_json.get('sender_id', '')
+            content = data_json.get('message', '')
+
+            # save to mysql
+            if room_id and content:
+                # receiver_id=receiver_id
+
+                await self.save_message(
+                    room_id=self.room_id,
+                    sender_id=sender_id,
+                    content=content
+                )
 
             # send message to room group
             await self.channel_layer.group_send(
@@ -49,6 +69,31 @@ class ChatConsumer(AsyncWebsocketConsumer):
                     'message': data_json
                 }
             )
+
+    @database_sync_to_async
+    def save_message(self, room_id, sender_id, content):
+        """
+        save message to db
+        """
+        try:
+            room = Room.objects.get(id=room_id)
+            sender = User.objects.get(id=sender_id)
+
+            # create message obj
+            message = Message.objects.create(
+                room=room,
+                sender=sender,
+                content=content
+            )
+
+            # update last message timestamp
+            room.last_message_at = timezone.now()
+            room.save()
+
+            return message
+        except (Room.DoesNotExist, User.DoesNotExist) as e:
+            print(f"Error saving message: {e}")
+            return None
 
     async def chat_message(self, event):
         """

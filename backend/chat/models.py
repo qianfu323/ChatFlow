@@ -31,12 +31,6 @@ class Message(models.Model):
         on_delete=models.CASCADE,
         related_name='sent_messages'
     )
-    receiver = models.ForeignKey(
-        User,
-        on_delete=models.CASCADE,
-        related_name='received_messages'
-    )
-
     content = models.TextField()  # message content
     timestamp = models.DateTimeField(default=timezone.now)  # message timestamp
 
