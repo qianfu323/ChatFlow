@@ -18,16 +18,16 @@ This is a **real-time group chat application** built using **Django Channels** f
 
 ### Tech Stack
 
-| Category | Technology | Key Components / Libraries |
-| :--- | :--- | :--- |
+| Category | Technology          | Key Components / Libraries |
+| :--- |:--------------------| :--- |
 | **Backend** | **Python (Django)** | Django Channels (WebSocket), Django REST Framework (DRF) |
-| **Database** | **MySQL** | `mysqlclient` |
-| **Async / Caching** | **Redis** | Used as the Channel Layer Backend |
-| **Frontend** | **Vue.js** | Vant UI (Mobile Component Library), Axios, native WebSocket API |
+| **Database** | **MySQL**           | `mysqlclient` |
+| **Async / Caching** | **Memory**          | Used as the Channel Layer Backend |
+| **Frontend** | **Vue.js**          | Vant UI (Mobile Component Library), Axios, native WebSocket API |
 
 ### Local Setup Guide
 
-Before starting, ensure you have **Python 3.8+**, **Node.js (npm/yarn)**, **MySQL** server, and **Redis** server installed and running on your system.
+Before starting, ensure you have **Python 3.8+**, **Node.js (npm/yarn)**, **MySQL** server installed and running on your system.
 
 #### Step 1: Clone the Repository
 
