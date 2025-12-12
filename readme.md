@@ -18,11 +18,11 @@ This is a **real-time group chat application** built using **Django Channels** f
 
 ### Tech Stack
 
-| Category | Technology          | Key Components / Libraries |
-| :--- |:--------------------| :--- |
-| **Backend** | **Python (Django)** | Django Channels (WebSocket), Django REST Framework (DRF) |
+| Category     | Technology          | Key Components / Libraries |
+|:-------------|:--------------------| :--- |
+| **Backend**  | **Python (Django)** | Django Channels (WebSocket), Django REST Framework (DRF) |
 | **Database** | **MySQL**           | `mysqlclient` |
-| **Async / Caching** | **Memory**          | Used as the Channel Layer Backend |
+| **Async**    | **Daphne**          | Used as the Channel Layer Backend |
 | **Frontend** | **Vue.js**          | Vant UI (Mobile Component Library), Axios, native WebSocket API |
 
 ### Local Setup Guide
